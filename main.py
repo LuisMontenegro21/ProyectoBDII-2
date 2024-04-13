@@ -5,8 +5,6 @@ import logging
 
 
 
-
-
 def main():
     logging.basicConfig(level=logging.DEBUG)
     load_status =  dotenv.load_dotenv("Neo4j-b8d4977a-Created-2024-04-11.txt")
@@ -18,18 +16,21 @@ def main():
     URI = os.getenv("NEO4J_URI")
     AUTH = (os.getenv("NEO4J_USERNAME"), os.getenv("NEO4J_PASSWORD"))
 
+    driver = None
     # verificar conectividad
     try:
         with GraphDatabase.driver(URI, auth=AUTH) as driver:
-            with driver.session() as session:
+           
+            with driver.session(database='neo4j') as session:
                 result = session.run("RETURN 'HELLO WORLD' AS text")
                 for record in result:
                     print(record['text'])
 
     except Exception as e:
         print(f"Exception : {e}")  
-    
-    driver.close()
+    finally:
+        if driver:
+            driver.close()
 
 
 
