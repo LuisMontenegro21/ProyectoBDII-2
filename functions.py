@@ -1,14 +1,7 @@
-from neo4j import GraphDatabase
-# autenticación de la instancia
-uri = "neo4j+s://b8d4977a.databases.neo4j.io"
-username = "neo4j"
-password = "C5NxIzMzKKWGzJz9eeQAy0dOfN-9tv0Ey37ExJTKLmc"
+from faker import Faker
+import random
 
-# creación del driver
-with GraphDatabase.driver(uri, auth=(username, password)) as driver:
-    driver.verify_connectivity()
-
-
+faker = Faker()
 
 '''Funciones para crear los nodos'''
 def add_user(tx, username, age, dpi, salary, account_number):
@@ -72,16 +65,3 @@ def create_performs(tx, account_num, deposit_id, transaction_id):
     )
 
 
-# to create the data 
-with driver.session() as session:
-    # ejemplo
-    user = session.write_transaction(add_user, "Fernando Adolfo Cabrera Lopez", 45, 3566234510101, 10000, 1470011931)
-    tax = session.write_transaction(add_tax, 1, "Asociados S.A.", "Toledo", "2015-07-01", 1000)
-    account = session.write_transaction(add_account, 203045678, "Banco Industrial", 3000, "2016-10-10")
-    business = session.write_transaction(add_business, "Toledo", "toledo@gmail.com", 55678920, 4500)
-    deposit = session.write_transaction(add_deposit, "Carlos Juarez", "John Lennon", 30, "2017-08-01", "Depósito", True)
-    withdrawal = session.write_transaction(add_withdrawal, 230456781, 400, "2020-04-07", "", True)
-    history = session.write_transaction(add_history, 1, "", "2021-06-07", 312968750, "deposit")
-    print("Success")
-
-driver.close()
