@@ -1,4 +1,5 @@
 from faker import Faker
+from datetime import datetime
 import random
 import csv
 
@@ -16,11 +17,13 @@ descriptions = ["El usuario excedió el doble de su sueldo mensual", "Al usuario
 
 
 def generate_accounts(n):
+    start = datetime(2010,1,1)
+    end = datetime(2024,1,1)
     with open('accounts.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
         for _ in range(n):
-            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,1000000), faker.date_between(start_date='2010-01-01', end_date='2024-01-01'), faker.boolean()])
+            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,1000000), faker.date_between(start_date=start, end_date=end), faker.boolean()])
 
 
 def generate_users(n):
