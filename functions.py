@@ -1,7 +1,4 @@
-from faker import Faker
-import random
 
-faker = Faker()
 
 '''Funciones para crear los nodos'''
 def add_user(tx, username, age, dpi, salary, account_number):
