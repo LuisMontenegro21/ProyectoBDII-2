@@ -11,15 +11,16 @@ banks = ['Banco Industrial', 'Banco Azteca', 'Banrural', 'G&T', 'Ficohsa', 'BAM'
 businesses = ['Socios S.A.' , 'Lavanderías Lara', 'Kinotipedia', 'EPA', 'Cemaco', 'Antillon', 'Farmacias R&R', 'Productos Toledo',
             'Q&A', 'HH', 'Ferreterías Coronado', 'Muebles El Roble', 'Farmacias Andoni-Mazza', 'Supermercados Fahsen', 'Repuestos Aioli',
             'FIHCA S.A', 'Fertilizantes Mayafer', 'Distribuidora Mariscal', 'Repuestos Acquoni', 'Salsas Don Justo']
-
+descriptions = ["El usuario excedió el doble de su sueldo mensual", "Al usuario se le acreditó dos veces su saldo en la cuenta bancaria",
+                "La empresa transfiere más de lo facturado facturado a la fecha", "A la empresa se le depositó más de dos veces el saldo de su cuenta"]
 
 
 def generate_accounts(n):
     with open('accounts.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['account_number', 'bank', 'balance', 'creation_date'])
+        writer.writerow(['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
         for _ in range(n):
-            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,1000000), faker.date()])
+            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,1000000), faker.date_between(start_date='2010-01-01', end_date='2024-01-01'), faker.boolean()])
 
 
 def generate_users(n):
@@ -66,7 +67,8 @@ def generate_deposit(n):
     with open('deposit.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['id', 'reminent', 'destinatary', 'amount', 'tran_date', 'description', 'is_valid'])
-        
+        for i in range(n):
+            writer.writerow([i])
 
 def generate_withdrawal(n):
     with open('withdrawal.csv', mode='w', newline='') as file:
@@ -81,11 +83,15 @@ def generate_history(n):
 
 
 
-print(len(businesses))
+
 # businesses 20
 # users 700
 # accounts 720
 # tax 2000
 # deposit 520
 # withdrawal 520
-# history 1040
+# history 520
+
+#generate_users(700)
+#generate_business()
+generate_accounts(720)
