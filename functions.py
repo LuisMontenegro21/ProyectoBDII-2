@@ -32,11 +32,11 @@ def add_deposit(tx, reminent, destinatary, amount, tran_date, description, is_va
     )
     return tx.run(query, reminent=reminent, destinatary=destinatary, amount=amount, tran_date=tran_date, description=description, is_valid=is_valid)
 
-def add_withdrawal(tx, account_num, amount, tran_date, description, is_valid):
+def add_withdrawal(tx, account_number, amount, tran_date, description, is_valid):
     query = (
-        "CREATE (w: Withdrawal {account_num: $account_num, amount: $amount, tran_date: $tran_date, description: $description, is_valid: $is_valid})"
+        "CREATE (w: Withdrawal {account_number: $account_number, amount: $amount, tran_date: $tran_date, description: $description, is_valid: $is_valid})"
     )
-    return tx.run(query,account_num=account_num, amount=amount, tran_date=tran_date, description=description, is_valid=is_valid)
+    return tx.run(query,account_number=account_number, amount=amount, tran_date=tran_date, description=description, is_valid=is_valid)
 
 def add_history(tx, id, description, date, account_number, transaction_type):
     query = (
