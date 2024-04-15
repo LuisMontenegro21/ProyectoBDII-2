@@ -23,7 +23,7 @@ def generate_accounts(n):
         writer = csv.writer(file)
         writer.writerow(['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
         for _ in range(n):
-            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,1000000), faker.date_between(start_date=start, end_date=end), faker.boolean()])
+            writer.writerow([random.randint(1000000000, 9000000000), random.choice(banks), random.randint(0,100000), faker.date_between(start_date=start, end_date=end), faker.boolean()])
 
 
 def generate_users(n):
