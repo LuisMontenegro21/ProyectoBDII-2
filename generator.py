@@ -55,15 +55,33 @@ def generate_business():
             #evitar duplicados
             local_var.remove(business)
 
-def generate_tax(n):
-    with open('business.csv', mode='w', newline='') as file:
+def read_business_names(filename):
+    business_names = []
+    with open(filename, mode='r', newline='') as file:
+        reader = csv.reader(file)
+        next(reader)  # Saltarse el encabezado si lo hay
+        for row in reader:
+            business_names.append(row[0])  # Asumimos que el nombre del negocio está en la primera columna
+    return business_names
+
+
+def generate_tax(n, users_filename):
+    users = read_business_names(users_filename)  # Lee los negocios del archivo
+    if not businesses:  # Verificar si la lista está vacía
+        print("No businesses found in the file.")
+        return
+    
+    with open('tax.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['id', 'supplier', 'client', 'emission_date', 'amount'])
         for i in range(n):
             supplier = random.choice(businesses)
-            client = random.choice(businesses)
+            client = random.choice(users)
+            # Asegurarse de que el proveedor y el cliente no sean el mismo
+            while client == supplier:
+                client = random.choice(businesses)
 
-            writer.writerow([i, supplier, client, faker.date(), random.randint(10,100000)])
+            writer.writerow([i, supplier, client, faker.date(), random.randint(10, 3500)])
 
 
 def generate_deposit(n):
@@ -97,4 +115,5 @@ def generate_history(n):
 
 #generate_users(700)
 #generate_business()
-generate_accounts(720)
+#generate_accounts(720)
+generate_tax(2000, 'users.csv')
