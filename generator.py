@@ -9,7 +9,8 @@ faker = Faker()
 possible_salaries_users = [2800,3000,3700,7000,14000,20000,28000,35000,40000, 45000]
 banks = ['Banco Industrial', 'Banco Azteca', 'Banrural', 'G&T', 'Ficohsa', 'BAM', 'Bantrab']
 businesses = ['Socios S.A.' , 'Lavanderías Lara', 'Kinotipedia', 'EPA', 'Cemaco', 'Antillon', 'Farmacias R&R', 'Productos Toledo',
-            'Q&A', 'HH', 'Ferreterías Coronado', 'Muebles El Roble', 'Farmacias Andoni-Mazza']
+            'Q&A', 'HH', 'Ferreterías Coronado', 'Muebles El Roble', 'Farmacias Andoni-Mazza', 'Supermercados Fahsen', 'Repuestos Aioli',
+            'FIHCA S.A', 'Fertilizantes Mayafer', 'Distribuidora Mariscal', 'Repuestos Acquoni', 'Salsas Don Justo']
 
 
 
@@ -76,3 +77,15 @@ def generate_history(n):
     with open('history.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['id', 'description', 'date', 'account_number', 'transaction_type'])
+
+
+
+
+print(len(businesses))
+# businesses 20
+# users 700
+# accounts 720
+# tax 2000
+# deposit 520
+# withdrawal 520
+# history 1040
