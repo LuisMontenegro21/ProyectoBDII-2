@@ -14,11 +14,12 @@ businesses = ['Socios S.A.' , 'Lavanderías Lara', 'Kinotipedia', 'EPA', 'Cemaco
             'FIHCA S.A', 'Fertilizantes Mayafer', 'Distribuidora Mariscal', 'Repuestos Acquoni', 'Salsas Don Justo']
 descriptions = ["El usuario excedió el doble de su sueldo mensual", "Al usuario se le acreditó dos veces su saldo en la cuenta bancaria",
                 "La empresa transfiere más de lo facturado facturado a la fecha", "A la empresa se le depositó más de dos veces el saldo de su cuenta"]
+start = datetime(2010,1,1)
+end = datetime(2024,1,1)
+
 
 
 def generate_accounts(n):
-    start = datetime(2010,1,1)
-    end = datetime(2024,1,1)
     with open('accounts.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
@@ -55,7 +56,7 @@ def generate_business():
             #evitar duplicados
             local_var.remove(business)
 
-def read_business_names(filename):
+def read_first_line(filename):
     business_names = []
     with open(filename, mode='r', newline='') as file:
         reader = csv.reader(file)
@@ -66,9 +67,9 @@ def read_business_names(filename):
 
 
 def generate_tax(n, users_filename):
-    users = read_business_names(users_filename)  # Lee los negocios del archivo
-    if not businesses:  # Verificar si la lista está vacía
-        print("No businesses found in the file.")
+    users = read_first_line(users_filename)  # Lee los negocios del archivo
+    if not users:  # Verificar si la lista está vacía
+        print("No users found in the file.")
         return
     
     with open('tax.csv', mode='w', newline='') as file:
@@ -81,15 +82,24 @@ def generate_tax(n, users_filename):
             while client == supplier:
                 client = random.choice(businesses)
 
-            writer.writerow([i, supplier, client, faker.date(), random.randint(10, 3500)])
+            writer.writerow([i, supplier, client, faker.date_between(start_date=start, end_date=end), random.randint(10, 3500)])
 
 
-def generate_deposit(n):
+def generate_deposit(n, accounts):
+    acc_num = read_first_line(accounts)
+    if not acc_num:
+        print("No accounts found in the file")
+        return 
     with open('deposit.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['id', 'reminent', 'destinatary', 'amount', 'tran_date', 'description', 'is_valid'])
         for i in range(n):
-            writer.writerow([i])
+            reminent = random.choice(acc_num)
+            destinatary = random.choice(acc_num)
+            amount = random.randint()
+            if reminent != destinatary:
+                
+                writer.writerow([i, reminent, destinatary,])
 
 def generate_withdrawal(n):
     with open('withdrawal.csv', mode='w', newline='') as file:
@@ -116,4 +126,4 @@ def generate_history(n):
 #generate_users(700)
 #generate_business()
 #generate_accounts(720)
-generate_tax(2000, 'users.csv')
+#generate_tax(2000, 'users.csv')
