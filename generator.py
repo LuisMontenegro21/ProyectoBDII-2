@@ -169,6 +169,32 @@ def generate_history():
             writer.writerow([id, description, date, account_number, transaction_type])
             id += 1
 
+
+
+import pandas as pd
+
+def add_id_column_to_csv(input_file_path, output_file_path):
+    # Cargar el archivo CSV
+    data = pd.read_csv(input_file_path)
+    
+    # Agregar una nueva columna al inicio que sea el ID
+    data.insert(0, 'id', range(1, len(data) + 1))
+    
+    # Guardar el archivo modificado en la ruta de salida especificada
+    data.to_csv(output_file_path, index=False)
+
+# Uso de la función
+input_file = 'withdrawal.csv'
+output_file = 'modified_withdrawal.csv'
+add_id_column_to_csv(input_file, output_file)
+
+
+
+
+
+
+
+
 # businesses 20
 # users 700
 # accounts 720
