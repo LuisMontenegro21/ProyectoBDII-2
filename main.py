@@ -6,7 +6,7 @@ from account import AccountManager
 from transactions import DepositManager, WithdrawalManager, RecordManager
 
 class MainCmd(cmd.Cmd):
-    intro = 'Welcome to the Neo4j Fraud Management CLI. Type help or ? to list commands.\n'
+    intro = 'Neo4j Fraud Management CLI. Type help or ? to list commands.\n'
     prompt = '(neo4j) '
 
     def __init__(self):
@@ -27,6 +27,7 @@ class MainCmd(cmd.Cmd):
         return True  # this will stop the Cmd application loop
 
     def do_users(self, arg):
+        '''for actions done with users'''
         args = arg.split()
         action = args[0] if args else 'list'  # Default action
         {
@@ -59,38 +60,42 @@ class MainCmd(cmd.Cmd):
         }.get(action, lambda: print("Invalid account command"))
 
     def do_tax(self, arg):
-        arg = arg.split()
-        action = arg[0] if arg else 'list'
+        '''Handle tax operations.'''
+        args = arg.split()
+        action = args[0] if args else 'list'
         {
-            'list' : self.tax_manager.list_taxes,
-            'download' : self.tax_manager.download_csv,   
-            'upload' : self.tax_manager.upload_csv
-        }.get(action, lambda: print("Invalid account command"))
+            'list': self.tax_manager.list_taxes,
+            'download': self.tax_manager.download_csv,
+            'upload': self.tax_manager.upload_csv
+        }.get(action, lambda: print("Invalid tax command\nTry:\n- tax list\n- tax download\n- tax upload"))()
+
 
     def do_deposit(self, arg):
-        arg = arg.split()
-        action = arg[0] if arg else 'list'
+        '''Handle deposit operations.'''
+        args = arg.split()
+        action = args[0] if args else 'list'
         {
-            'list' : self.deposit_manager.list_deposits,
-            'make' : self.deposit_manager.make_deposit,   
-        }.get(action, lambda: print("Invalid account command"))
+            'list': self.deposit_manager.list_deposits,
+            'make': self.deposit_manager.make_deposit
+        }.get(action, lambda: print("Invalid deposit command\nTry:\n- deposit list\n- deposit make"))()
 
     def do_withdrawal(self, arg):
-        arg = arg.split()
-        action = arg[0] if arg else 'list'
+        '''Handle withdrawal operations.'''
+        args = arg.split()
+        action = args[0] if args else 'list'
         {
-            'list' : self.withdrawal_manager.list_withdrawal,
-            'make' : self.withdrawal_manager.make_withdrawal,   
-        }.get(action, lambda: print("Invalid account command\nTry:\n- tax list\n- tax download\n- tax upload"))
+            'list': self.withdrawal_manager.list_withdrawal,
+            'make': self.withdrawal_manager.make_withdrawal
+        }.get(action, lambda: print("Invalid withdrawal command\nTry:\n- withdrawal list\n- withdrawal make"))()
 
     
     def do_record(self, arg):
-        arg = arg.split()
-        action = arg[0] if arg else 'list'
+        '''Handle record operations.'''
+        args = arg.split()
+        action = args[0] if args else 'list'
         {
-            'list' : self.record_manager.list_records,
-
-        }.get(action, lambda: print("Invalid account command\nTry:\n- record list"))
+            'list': self.record_manager.list_records
+        }.get(action, lambda: print("Invalid record command\nTry:\n- record list"))()
 
     def do_query(self, arg):
         """Run a custom Neo4j query. Usage: query <your_query_here>"""
