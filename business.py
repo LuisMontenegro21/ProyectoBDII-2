@@ -15,3 +15,6 @@ class BusinessManager:
                 print(business)
         except Exception as e:
             print(f"An error occurred: {e}")
+    
+    def add_businesses(self):
+        pass

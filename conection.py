@@ -17,6 +17,7 @@ class Neo4jConnection:
         self.PASSWORD = os.getenv("NEO4J_PASSWORD")
         self.AUTH = (self.USERNAME, self.PASSWORD)
 
+    # for simple queries
     def query(self, query, parameters=None):
         with self.driver.session(database='neo4j') as session:
             result = session.run(query, parameters)
