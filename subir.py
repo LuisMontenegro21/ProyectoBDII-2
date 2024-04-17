@@ -4,7 +4,7 @@ import random
 
 # Conexión a Neo4j
 try:
-    graph = Graph("neo4j+s://c891d5d4.databases.neo4j.io", auth=("neo4j", "yyArBTvVVP8QFd5n3AQicH0c_iW5mqoWR7AgltfXHBI"))
+    graph = Graph("neo4j+s://3bee0d58.databases.neo4j.io", auth=("neo4j", "9bmUxCJKULbvvNVZSanGdLKTIDGlWJBe34cxNegjKmU"))
     # Realiza una consulta simple para probar la conexión
     graph.run("MATCH (n) RETURN COUNT(n) LIMIT 1")
     print("Conexión establecida exitosamente.")
