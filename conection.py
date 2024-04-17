@@ -9,7 +9,7 @@ class Neo4jConnection:
         self.driver = GraphDatabase.driver(self.URI, auth=self.AUTH)
 
     def load_neo4j_env(self):
-        load_status = dotenv.load_dotenv("Neo4j-b8d4977a-Created-2024-04-11.txt")
+        load_status = dotenv.load_dotenv("Neo4j-3bee0d58-Created-2024-04-17.txt")
         if not load_status:
             raise RuntimeError('Environment variables not loaded')
         self.URI = os.getenv("NEO4J_URI")

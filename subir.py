@@ -62,16 +62,16 @@ def create_one_to_many_relationships(source_label, target_label, relationship_ty
         print(f"Error al hacer relación uno a muchos {relationship_type} de {source_label} a {target_label} basadas en {source_property} y {target_property}: ", e)
 
 # Carga de datos desde CSV
-'''load_csv('users.csv', 'Users', ['name', 'age', 'dpi', 'salary', 'email'])
-load_csv('business.csv', 'Business', ['name', 'email', 'address', 'phone_number', 'monthly_income'])
-load_csv('accounts.csv', 'Accounts', ['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
-load_csv('tax.csv', 'Taxes', ['id', 'supplier', 'client', 'emission_date', 'amount'])
-load_csv('deposit.csv', 'Deposit', ['id', 'reminent', 'destinatary', 'amount', 'tran_date', 'description', 'is_valid'])
-load_csv('withdrawal.csv', 'Withdrawal', ['id','account_num', 'amount', 'tran_date', 'description', 'is_valid'])
-load_csv('history.csv', 'Record', ['id', 'description', 'date', 'account_number', 'transaction_type'])'''
+#load_csv('users.csv', 'Users', ['name', 'age', 'dpi', 'salary', 'email', 'account_number'])
+#load_csv('business.csv', 'Business', ['name', 'email', 'address', 'phone_number', 'monthly_income', 'account_number'])
+#load_csv('accounts.csv', 'Accounts', ['account_number', 'bank', 'balance', 'creation_date', 'insurance'])
+#load_csv('tax.csv', 'Taxes', ['id', 'supplier', 'client', 'emission_date', 'amount'])
+#load_csv('deposit.csv', 'Deposit', ['id', 'reminent', 'destinatary', 'amount', 'tran_date', 'description', 'is_valid'])
+#load_csv('withdrawal.csv', 'Withdrawal', ['id','account_num', 'amount', 'tran_date', 'description', 'is_valid'])
+#load_csv('history.csv', 'Record', ['id', 'description', 'date', 'account_number', 'transaction_type'])
 
 
-# Crear relaciones aleatorias sin repetirse
+'''# Crear relaciones aleatorias sin repetirse
 #create_one_to_many_relationships('Business', 'Taxes', 'EMITE', 'name', 'supplier')
 create_random_relationships('Users', 'Business', 'POSEE')
 create_random_relationships('Business', 'Accounts', 'DISPONE')
@@ -79,4 +79,7 @@ create_random_relationships('Users', 'Accounts', 'TIENE')
 create_random_relationships('Accounts', 'Deposit', 'DEPOSITA')
 create_random_relationships('Accounts', 'Withdrawal', 'RETIRA')
 create_random_relationships('Deposit','Record', 'GENERA')
-create_random_relationships( 'Withdrawal', 'Record', 'CREA')
+create_random_relationships( 'Withdrawal', 'Record', 'CREA')'''
+
+create_one_to_many_relationships('Users', 'Accounts', 'TIENE', 'account_number', 'account_number')
+create_one_to_many_relationships('Business', 'Accounts', 'DISPONE', 'account_number', 'account_number')
