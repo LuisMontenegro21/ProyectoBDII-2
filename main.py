@@ -1,40 +1,52 @@
-from neo4j import GraphDatabase
-import dotenv
-import os
-import tkinter as tk
+import cmd
+from app import Neo4jConnection
 
 
-def main():
-    load_status = dotenv.load_dotenv("Neo4j-b8d4977a-Created-2024-04-11.txt")
-    if load_status is False:
-        raise RuntimeError('Environment variables not loaded')
+class MainCmd(cmd.Cmd):
+    intro = 'Welcome to the Neo4j Management CLI. Type help or ? to list commands.\n'
+    prompt = '(neo4j) '
+
+    def __init__(self):
+        super().__init__()
+        self.neo4j_conn = Neo4jConnection()
+
+    def do_exit(self, arg):
+        """Exit the application."""
+        print("Closing connection and exiting...")
+        self.neo4j_conn.close()
+        return True  # this will stop the Cmd application loop
+
+    def do_users(self, arg):
+        """Manage user information."""
+        # Example command: users list
+        args = arg.split()
+        if not args:
+            print("No action specified. Try 'users list', 'users add', etc.")
+            return
+        if args[0] == 'list':
+            self.list_users()
+        else:
+            print("Invalid user command.")
     
-    URI = os.getenv("NEO4J_URI")
-    USERNAME = os.getenv("NEO4J_USERNAME")
-    PASSWORD = os.getenv("NEO4J_PASSWORD")
-    AUTH = (USERNAME, PASSWORD)
+    def list_users(self):
+        try:
+            query = "MATCH (n:User) RETURN n"
+            users = self.neo4j_conn.query(query)
+            for user in users:
+                print(user)
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
-    # Print to debug
-    print(f"URI: {URI}")
-    print(f"Username: {USERNAME}")
-    print(f"Password: {PASSWORD}")
+    def do_query(self, arg):
+        """Run a custom Neo4j query. Usage: query <your_query_here>"""
+        try:
+            result = self.neo4j_conn.query(arg)
+            for record in result:
+                print(record)
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
-    driver = None
-    try:
-        with GraphDatabase.driver(URI, auth=AUTH) as driver:
-            with driver.session(database='neo4j') as session:
-                result = session.run("RETURN 'HELLO WORLD' AS text")
-                for record in result:
-                    print(record['text'])
-    except Exception as e:
-        print(f"Exception : {e}")  
-    finally:
-        if driver:
-            driver.close()
+# Additional commands for User, Business, Account, Tax, etc.
 
-
-
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    MainCmd().cmdloop()

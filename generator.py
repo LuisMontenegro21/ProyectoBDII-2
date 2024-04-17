@@ -12,6 +12,8 @@ businesses = ['Socios S.A.' , 'Lavanderías Lara', 'Kinotipedia', 'EPA', 'Cemaco
             'FIHCA S.A', 'Fertilizantes Mayafer', 'Distribuidora Mariscal', 'Repuestos Acquoni', 'Salsas Don Justo']
 descriptions = ["El usuario excedió el doble de su sueldo mensual", "Al usuario se le acreditó dos veces su saldo en la cuenta bancaria",
                 "La empresa transfiere más de lo facturado facturado a la fecha", "A la empresa se le depositó más de dos veces el saldo de su cuenta"]
+min_earnings = 5000
+max_earnings = 7000
 start = datetime(2010,1,1)
 end = datetime(2024,1,1)
 
