@@ -71,15 +71,13 @@ def create_one_to_many_relationships(source_label, target_label, relationship_ty
 #load_csv('history.csv', 'Record', ['id', 'description', 'date', 'account_number', 'transaction_type'])
 
 
-'''# Crear relaciones aleatorias sin repetirse
+# Crear relaciones aleatorias sin repetirse
 #create_one_to_many_relationships('Business', 'Taxes', 'EMITE', 'name', 'supplier')
-create_random_relationships('Users', 'Business', 'POSEE')
+#create_random_relationships('Users', 'Business', 'POSEE')
 create_random_relationships('Business', 'Accounts', 'DISPONE')
 create_random_relationships('Users', 'Accounts', 'TIENE')
-create_random_relationships('Accounts', 'Deposit', 'DEPOSITA')
-create_random_relationships('Accounts', 'Withdrawal', 'RETIRA')
-create_random_relationships('Deposit','Record', 'GENERA')
-create_random_relationships( 'Withdrawal', 'Record', 'CREA')'''
+#create_random_relationships('Accounts', 'Deposit', 'DEPOSITA')
+#create_random_relationships('Accounts', 'Withdrawal', 'RETIRA')
+#create_random_relationships('Deposit','Record', 'GENERA')
+#create_random_relationships( 'Withdrawal', 'Record', 'CREA')
 
-create_one_to_many_relationships('Users', 'Accounts', 'TIENE', 'account_number', 'account_number')
-create_one_to_many_relationships('Business', 'Accounts', 'DISPONE', 'account_number', 'account_number')

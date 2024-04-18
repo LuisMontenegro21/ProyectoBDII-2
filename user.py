@@ -4,16 +4,33 @@ class UserManager:
         self.neo4j_conn = neo4j_conn
 
     def list_users(self):
+        print("List Users")
         try:
-            query = "MATCH (n:Users) RETURN n"
+            # Asking the user for the number of users to display
+            limit = input("Enter the number of users to display or 'all' for no limit: ")
+            
+            # Constructing the query with a limit if specified
+            if limit.lower() == 'all':
+                query = "MATCH (n:Users) RETURN n"
+            else:
+                try:
+                    limit = int(limit)  # Convert the limit to an integer
+                    query = f"MATCH (n:Users) RETURN n LIMIT {limit}"
+                except ValueError:
+                    print("Invalid input: Please enter a valid number or 'all'.")
+                    return
+
             result = self.neo4j_conn.query(query)
             if not result:
                 print("No users found.")
                 return
+
             for user in result:
                 print(user)
+
         except Exception as e:
             print(f"An error occurred: {e}")
+
             
     '''añadir usuarios'''
     def add_users(self):
