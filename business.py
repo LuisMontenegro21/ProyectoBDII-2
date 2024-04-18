@@ -40,10 +40,10 @@ class TaxManager:
     
     def download_csv(self):
         print("Downloading tax data to CSV...")
-        query = "MATCH (t:Tax) RETURN t"
+        query = "MATCH (t:Taxes) RETURN t"
         try:
             result = self.neo4j_conn.query(query)
-            with open('tax_data.csv', 'w', newline='', encoding='utf-8') as csvfile:
+            with open('csv_files/tax_data.csv', 'w', newline='', encoding='utf-8') as csvfile:
                 fieldnames = result[0]['t'].keys()  # Assuming all nodes have the same structure
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -58,17 +58,18 @@ class TaxManager:
     def upload_csv(self):
         print("Uploading tax data from CSV...")
         try:
-            with open('tax_data.csv', 'r', newline='', encoding='utf-8') as csvfile:
+            with open('csv_files/tax_data.csv', 'r', newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     query = """
-                    CREATE (t:Tax {id: $id, name: $name, rate: $rate, description: $description})
+                    MERGE    (t:Taxes {amount: $amount, supplier: $supplier, client: $client, id: $id, emission_date:$emission_date})
                     """
                     parameters = {
+                        'amount': row['amount'],
+                        'supplier': row['supplier'],
+                        'client': row['client'],
                         'id': row['id'],
-                        'name': row['name'],
-                        'rate': row['rate'],
-                        'description': row['description']
+                        'emission_date': row['emission_date']
                     }
                     self.neo4j_conn.query(query, parameters)
             print("Upload complete. Tax data has been imported into the database.")
